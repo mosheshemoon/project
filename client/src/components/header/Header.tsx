@@ -1,6 +1,6 @@
 import css from './Header.module.scss';
 
-function Header() {
+const Header = () => {
     return (
         <div className={css.header}>
             <h1>user details!</h1>

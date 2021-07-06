@@ -4,7 +4,7 @@ import userApi from "../../api/userApi";
 import UserDetails from "../userDetails/UserDetails";
 import css from "./UsersList.module.scss";
 
-function UsersList() {
+const UsersList = () => {
   const [users, setusers] = useState<User[]>([]);
   const [error, seterror] = useState<string>("");
 
