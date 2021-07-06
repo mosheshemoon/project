@@ -17,19 +17,12 @@ export async function addUser(
     }
 
     const users = JSON.parse(await fileReader.readFile(USER_PATH));
-    const user = getUserByPassword(password, users);
+    const userToUpdate = getUserByPassword(password, users);
+    const user = userToUpdate
+      ? await updateUserDate(userToUpdate)
+      : await saveNewUser(password, username, users);
 
-    if (user) {
-      const currentDate = new Date();
-      await updateUser(password, user, currentDate);
-      user.lastVisited = currentDate;
-      return user;
-    }
-
-    const newUser = createUserObject(password, username);
-    users.push(newUser);
-    await fileReader.writeToFile(USER_PATH, JSON.stringify(users));
-    return newUser;
+    return user;
   } catch (err) {
     throw err;
   }
@@ -50,14 +43,11 @@ export async function updateUser(
             username: userToUpdate.username,
             password,
             status: userToUpdate.status,
-            lastVisited: date,
+            lastVisited: date ? date : user.lastVisited,
           }
         : user
     );
-    return await fileReader.writeToFile(
-      USER_PATH,
-      JSON.stringify(updatedUsers)
-    );
+    await fileReader.writeToFile(USER_PATH, JSON.stringify(updatedUsers));
   } catch (err) {
     throw err;
   }
@@ -86,6 +76,17 @@ function getUserByPassword(password: string, users: User[]): User | undefined {
   return users.find((user) => user.password === password);
 }
 
+async function saveNewUser(
+  password: string,
+  username: string,
+  users: User[]
+): Promise<User> {
+  const user = createUserObject(password, username);
+  users.push(user);
+  await fileReader.writeToFile(USER_PATH, JSON.stringify(users));
+  return user;
+}
+
 function createUserObject(password: string, username: string): User {
   return {
     username,
@@ -93,4 +94,11 @@ function createUserObject(password: string, username: string): User {
     status: Status.Active,
     lastVisited: new Date(),
   };
+}
+
+async function updateUserDate(user: User) {
+  const currentDate = new Date();
+  await updateUser(user.password, user, currentDate);
+  user.lastVisited = currentDate;
+  return user;
 }

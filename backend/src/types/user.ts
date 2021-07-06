@@ -1,6 +1,8 @@
+import { Status } from "../enums/status";
+
 export interface User {
     password: string
     username: string
     lastVisited: Date
-    status: string
+    status: Status
 }
