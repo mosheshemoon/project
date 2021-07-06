@@ -1,0 +1,24 @@
+.home {
+    display: grid;
+    grid-template-areas:
+        "logo"
+        "header"
+        "body"
+        "footer";
+    align-items: center;
+    justify-items: center;
+
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+
+    header {
+        font-size: 28px;
+        font-weight: 800;
+    }
+
+    footer {
+        font-size: 10px;
+        font-weight: 800;
+        border-bottom: 2px dotted;
+    }
+}

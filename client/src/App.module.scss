@@ -1,0 +1,17 @@
+:root {
+    --yellow: #eeff00;
+    --green: #abfe00;
+}
+
+* {
+  outline: none;
+}
+
+.App {
+  position: fixed;
+  inset: 0;
+  overflow: auto;
+
+  background-color: #9f9faa;
+  color: white;
+}
