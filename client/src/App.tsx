@@ -16,11 +16,11 @@ function App(): JSX.Element {
           <Route path="/login">
             <Login></Login>
           </Route>
-          <Route exact path="/">
+          <Route exact path="/home">
             <Home></Home>
           </Route>
           <Route exact path="/*">
-            <Redirect to="/" />
+            <Redirect to="/login" />
           </Route>
         </Switch>
       </Router>

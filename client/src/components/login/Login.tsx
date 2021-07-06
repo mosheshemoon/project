@@ -41,7 +41,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await userApi.createUser(username, password);
-      history.push("/");
+      history.push("/home");
     } catch (err) {
       alert(err?.message);
     }
